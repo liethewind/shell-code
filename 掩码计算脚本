@@ -1,0 +1,28 @@
+#!/bin/bash
+#向文件中输入掩码，通过PY脚本计算掩码段
+dir=/chaifen
+> C.txt
+function cname(){
+q=`cat 1.py | awk -F '=' 'NR==4{print $2}'`
+w=`sed -i "s/$q/'$1'/g" 1.py`
+e=`python 1.py |awk 'NR==2{print $1}'`
+echo  "/$e;" >> C.txt
+}
+while read line 
+do
+cname $line
+done < ./yanma.txt
+
+#####分割符####
+
+#!/usr/bin/env python
+# coding:utf-8
+#!/bin/bash
+netmask ='255.248.0.0'
+result = ""
+print netmask
+for num in netmask.split('.'):
+  temp = str(bin(int(num)))[2:]
+  result = result + temp
+print len("".join(str(result).split('0')[0:1]))
+#将python脚本放到与sh脚本相同的目录，输入掩码段至yanma.txt运行sh脚本结果输出至C.txt
