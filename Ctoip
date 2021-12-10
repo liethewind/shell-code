@@ -1,0 +1,18 @@
+import IPy
+ 
+def ipcToips():
+    readPath='ip_c.txt'
+    writePath='ips.txt'
+    writeFile=open(writePath,'w')
+    with open(readPath,'r') as f:
+        for line in f:
+            ip_c=line.strip('\n')
+            ip = IPy.IP(ip_c)
+            # print ip.len()
+            for line in ip:
+                # 保留1921168.1.1-255，去除192.168.1.0
+                if ('.0') not in str(line).strip('\n'):
+                    writeFile.write(str(line)+'\n')
+    writeFile.close()
+if __name__ == '__main__':
+    ipcToips()
